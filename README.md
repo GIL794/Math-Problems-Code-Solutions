@@ -78,6 +78,33 @@ A father has 49 coins (weighing 1g, 2g, 3g... up to 49g) and 7 children. Each ch
 
 ---
 
+### 🎯 Goldbach Conjecture Verifier
+**One of Mathematics' Greatest Unsolved Mysteries**
+
+Can every even number greater than 2 be expressed as the sum of two primes? For 280 years, nobody has proven this, yet it's been verified for numbers up to 4 × 10¹⁸! This verifier finds all prime pair representations and analyzes patterns. It's like being a mathematical detective hunting for counterexamples!
+
+🔗 [Investigate the Conjecture →](./Goldbach%20Conjecture%20Verifier/)
+
+---
+
+### φ Euler's Totient Function
+**The Secret Heart of Modern Cryptography**
+
+Discover φ(n) - the count of numbers coprime to n. This elegant function is the foundation of RSA encryption that secures your online banking! Learn how ancient number theory became the bedrock of internet security. From totient twins to multiplicative properties, explore the mathematics that keeps your data safe.
+
+🔗 [Calculate Totients →](./Euler%20Totient%20Function/)
+
+---
+
+### 🔐 Modular Exponentiation & RSA
+**Cryptography You Can Actually Understand**
+
+How do you encrypt messages so securely that even supercomputers can't break them? RSA! This implementation shows you how to generate keys, encrypt messages, and decrypt them using modular arithmetic. Watch as 2^10000 mod 1000000007 gets computed in microseconds using the brilliant square-and-multiply algorithm!
+
+🔗 [Unlock RSA Secrets →](./Modular%20Exponentiation%20and%20RSA/)
+
+---
+
 ## 🚀 Quick Start
 
 Each project is self-contained and easy to run:
@@ -106,12 +133,14 @@ python collatz_analyzer.py
 
 These aren't just mathematical curiosities—they're fundamental to:
 
-- 🔐 **Cryptography** - Prime numbers secure your online banking
+- 🔐 **Cryptography** - RSA encryption, Euler's totient, and modular arithmetic secure online banking and HTTPS
+- 🔑 **Internet Security** - Every SSL/TLS certificate and SSH key relies on the mathematics demonstrated here
 - 🎨 **Art & Design** - The golden ratio creates beautiful proportions
-- 🌍 **Computer Science** - Algorithms power everything from search engines to AI
+- 🌍 **Computer Science** - Fast algorithms (like binary exponentiation) power everything from search to blockchain
 - 🧬 **Nature** - Mathematical patterns explain spirals in shells and flowers
 - 🎮 **Game Development** - Number theory creates procedural generation
 - 💰 **Finance** - Fibonacci levels guide trading strategies
+- 🔬 **Pure Mathematics** - Goldbach's conjecture remains unsolved after 280 years - maybe you'll find insights!
 
 ## 🎯 From Small to Big
 
