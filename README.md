@@ -78,6 +78,33 @@ A father has 49 coins (weighing 1g, 2g, 3g... up to 49g) and 7 children. Each ch
 
 ---
 
+### 🔢 Goldbach Conjecture Verifier
+**The 280-Year-Old Mystery**
+
+Can every even number greater than 2 be expressed as the sum of two primes? Christian Goldbach asked this question in 1742, and it remains UNPROVEN! Verified for numbers up to 4 × 10^18, but still unsolved. Explore this legendary problem and see why it has stumped mathematicians for nearly three centuries.
+
+🔗 [Verify the Conjecture →](./Goldbach%20Conjecture%20Verifier/)
+
+---
+
+### φ Euler's Totient Function
+**The Key to Modern Encryption**
+
+Euler's φ(n) counts how many numbers are coprime to n—and it's the mathematical foundation of RSA encryption that protects your credit cards online! Discover this elegant function that bridges ancient number theory with modern cybersecurity. Every time you see the padlock in your browser, you're using this!
+
+🔗 [Calculate φ(n) →](./Euler%20Totient%20Function/)
+
+---
+
+### 🔐 Modular Exponentiation & RSA
+**How the Internet Stays Secret**
+
+Ever wondered how your password travels safely across the internet? RSA encryption uses fast modular exponentiation and the magic of one-way functions. This demo shows you the mathematics that makes secure communication possible—from ancient number theory to protecting billions of transactions every day!
+
+🔗 [Explore RSA →](./Modular%20Exponentiation%20RSA/)
+
+---
+
 ## 🚀 Quick Start
 
 Each project is self-contained and easy to run:
