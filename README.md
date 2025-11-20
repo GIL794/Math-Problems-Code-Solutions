@@ -2,7 +2,7 @@
 
 > **From Ancient Puzzles to Million-Dollar Problems—Mathematics Meets Code!** 🚀
 
-Welcome to a comprehensive collection spanning **13 mathematical problems** from accessible puzzles to elite unsolved mysteries! This repository proves that coding isn't just about work—it's about **discovery**, **creativity**, and **tackling challenges** that range from playful brain teasers to problems that have stumped humanity's greatest minds for centuries.
+Welcome to a comprehensive collection spanning **14 mathematical problems** from accessible puzzles to elite unsolved mysteries! This repository proves that coding isn't just about work—it's about **discovery**, **creativity**, and **tackling challenges** that range from playful brain teasers to problems that have stumped humanity's greatest minds for centuries.
 
 **What makes this unique?** We bridge three worlds:
 - 🎮 **Classic Puzzles** - Fun, accessible problems perfect for learning
@@ -73,6 +73,15 @@ A perfect number equals the sum of its divisors (excluding itself). Only 51 are 
 The Babylonians knew about Pythagorean triples 1,000 years before Pythagoras! Generate all the integer solutions to a² + b² = c² and discover the elegant patterns that emerge. From architecture to computer graphics, these triples are everywhere.
 
 🔗 [Find Triples →](./Pythagorean%20Triples%20Finder/)
+
+---
+
+### 🔁 GCD and LCM Calculator
+**Euclid's Algorithm - The Oldest Still in Use**
+
+Master the 2,300-year-old Euclidean algorithm! Calculate the Greatest Common Divisor and Least Common Multiple of any numbers. From simplifying fractions to RSA cryptography, these fundamental operations power modern mathematics and computer science. Witness the elegance of an algorithm so efficient it's still the best solution millennia later!
+
+🔗 [Calculate GCD & LCM →](./GCD%20and%20LCM%20Calculator/)
 
 ---
 
