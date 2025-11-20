@@ -55,11 +55,18 @@ The program will:
 ## Example Output
 
 ```text
+Goldbach Verification for 28
+✓ Verified: 28 can be expressed as sum of two primes
+   Number of representations: 4
+
+   Goldbach pairs:
+           5 +     23 = 28
+          11 +     17 = 28
+          17 +     11 = 28
+          23 +      5 = 28
 GOLDBACH CONJECTURE VERIFIER
-======================================================================
 
 Verification for small even numbers (4 to 50)
-======================================================================
 
 4 = 2 + 2
 6 = 3 + 3
@@ -74,7 +81,6 @@ Verification for small even numbers (4 to 50)
 ✓ All numbers verified!
 
 Goldbach Representations Analysis
-======================================================================
 Total even numbers analyzed: 24
 Successfully verified: 24
 Average representations per number: 2.54

@@ -94,11 +94,22 @@ The program will:
 ## Example Output
 
 ```text
+Euler's Totient Function: φ(12)
+φ(12) = 4
+Ratio φ(n)/n = 0.3333
+
+Prime factorization: 12 = 2^2 × 3
+n has multiple prime factors
+
+Numbers coprime to 12:
+  [1, 5, 7, 11]
+
+Properties:
+  • 4 out of 12 numbers are coprime to 12
+  • 8 numbers share a common factor with 12
 EULER'S TOTIENT FUNCTION CALCULATOR
-======================================================================
 
 Euler's Totient Function φ(n) for n = 1 to 20
-======================================================================
 
 n=  1  n=  2  n=  3  n=  4  n=  5
 φ=  1  φ=  1  φ=  2  φ=  2  φ=  4
@@ -107,7 +118,6 @@ n=  6  n=  7  n=  8  n=  9  n= 10
 φ=  2  φ=  6  φ=  4  φ=  6  φ=  4
 
 Detailed Analysis of φ(12)
-======================================================================
 Number: 12
 φ(12) = 4
 Ratio: φ(n)/n = 0.333333
