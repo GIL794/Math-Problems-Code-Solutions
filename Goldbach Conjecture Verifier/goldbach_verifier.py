@@ -1,13 +1,43 @@
 """
 Goldbach Conjecture Verifier
 
-Verifies Goldbach's Conjecture: Every even integer greater than 2 can be
-expressed as the sum of two prime numbers.
+The Goldbach Conjecture states that every even integer greater than 2 can be
+expressed as the sum of two prime numbers. This remains one of the oldest
+unsolved problems in number theory (proposed in 1742).
 
-This famous unsolved problem was proposed by Christian Goldbach in 1742.
-While it has been verified for extremely large numbers, it remains unproven
-in the general case.
+This program verifies the conjecture for a range of even numbers and finds
+all possible prime pair representations for each number.
 """
+
+def sieve_of_eratosthenes(limit):
+    """
+    Find all prime numbers up to a given limit using the Sieve of Eratosthenes.
+    
+    Args:
+        limit: Upper bound for finding primes
+    
+    Returns:
+        List of prime numbers up to limit
+    """
+    if limit < 2:
+        return []
+    
+    # Create a boolean array where True means the number is prime
+    is_prime = [True] * (limit + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+    
+    # Sieve of Eratosthenes algorithm
+    for i in range(2, int(limit ** 0.5) + 1):
+        if is_prime[i]:
+            # Mark all multiples of i as not prime
+            for j in range(i * i, limit + 1, i):
+                is_prime[j] = False
+    
+    # Collect all primes
+    primes = [i for i in range(2, limit + 1) if is_prime[i]]
+    return primes
+
 
 def is_prime(n):
     """
@@ -34,232 +64,304 @@ def is_prime(n):
     return True
 
 
-def sieve_of_eratosthenes(limit):
+def find_goldbach_pairs(n, primes_set=None):
     """
-    Find all prime numbers up to a given limit using the Sieve of Eratosthenes.
+    Find all pairs of primes that sum to n (Goldbach representations).
     
     Args:
-        limit: Upper bound for finding primes
+        n: Even number to find prime pairs for
+        primes_set: Set of primes up to n (computed if not provided)
     
     Returns:
-        List of prime numbers up to limit
-    """
-    if limit < 2:
-        return []
-    
-    # Create a boolean array where True means the number is prime
-    is_prime_array = [True] * (limit + 1)
-    is_prime_array[0] = False
-    is_prime_array[1] = False
-    
-    # Sieve of Eratosthenes algorithm
-    for i in range(2, int(limit ** 0.5) + 1):
-        if is_prime_array[i]:
-            # Mark all multiples of i as not prime
-            for j in range(i * i, limit + 1, i):
-                is_prime_array[j] = False
-    
-    # Collect all primes
-    primes = [i for i in range(2, limit + 1) if is_prime_array[i]]
-    return primes
-
-
-def find_goldbach_pairs(n):
-    """
-    Find all pairs of primes that sum to n (Goldbach pairs).
-    
-    Args:
-        n: Even integer greater than 2
-    
-    Returns:
-        List of tuples (p, q) where p and q are primes and p + q = n
+        List of tuples (p1, p2) where p1 + p2 = n and p1 <= p2
     """
     if n <= 2 or n % 2 != 0:
         return []
     
+    # Generate primes if not provided
+    if primes_set is None:
+        primes = sieve_of_eratosthenes(n)
+        primes_set = set(primes)
+    
     pairs = []
     
+    # Find all pairs where p1 + p2 = n
     # We only need to check up to n/2 to avoid duplicates
-    for p in range(2, n // 2 + 1):
-        if is_prime(p):
-            q = n - p
-            if is_prime(q):
-                pairs.append((p, q))
+    # Sort the set to iterate in order
+    for p1 in sorted(primes_set):
+        if p1 > n // 2:
+            break
+        p2 = n - p1
+        if p2 in primes_set:
+            pairs.append((p1, p2))
     
     return pairs
 
 
-def verify_goldbach(n):
-    """
-    Verify that a specific even number can be expressed as sum of two primes.
-    
-    Args:
-        n: Even integer greater than 2
-    
-    Returns:
-        Tuple (success, pairs) where success is True if verification passed
-    """
-    if n <= 2:
-        return False, []
-    
-    if n % 2 != 0:
-        return False, []
-    
-    pairs = find_goldbach_pairs(n)
-    return len(pairs) > 0, pairs
-
-
 def verify_goldbach_range(start, end):
     """
-    Verify Goldbach's conjecture for a range of even numbers.
+    Verify Goldbach's conjecture for all even numbers in a range.
     
     Args:
         start: Starting even number
-        end: Ending even number (inclusive)
+        end: Ending even number
     
     Returns:
-        Dictionary with results for each number
+        Dictionary mapping each even number to its Goldbach pairs
     """
-    results = {}
-    
-    # Ensure start is even
+    # Ensure start is even and >= 4
+    if start < 4:
+        start = 4
     if start % 2 != 0:
         start += 1
     
-    # Ensure start is at least 4
-    start = max(start, 4)
+    # Ensure end is even
+    if end % 2 != 0:
+        end -= 1
+    
+    # Generate all primes up to end once
+    primes = sieve_of_eratosthenes(end)
+    primes_set = set(primes)
+    
+    results = {}
     
     for n in range(start, end + 1, 2):
-        success, pairs = verify_goldbach(n)
-        results[n] = {
-            'verified': success,
-            'pair_count': len(pairs),
-            'first_pair': pairs[0] if pairs else None
-        }
+        pairs = find_goldbach_pairs(n, primes_set)
+        results[n] = pairs
     
     return results
 
 
-def count_representations(n, max_n=None):
+def analyze_goldbach_representations(results):
     """
-    Count how many ways an even number can be represented as sum of two primes.
+    Analyze patterns in Goldbach representations.
     
     Args:
-        n: Even integer to analyze
-        max_n: Optional maximum to analyze a range
+        results: Dictionary from verify_goldbach_range
     
     Returns:
-        Dictionary or single count
+        Dictionary with analysis statistics
     """
-    if max_n is None:
-        pairs = find_goldbach_pairs(n)
-        return len(pairs)
-    else:
-        counts = {}
-        for num in range(4, max_n + 1, 2):
-            pairs = find_goldbach_pairs(num)
-            counts[num] = len(pairs)
-        return counts
+    analysis = {
+        'total_numbers': len(results),
+        'verified': 0,
+        'failed': [],
+        'max_representations': 0,
+        'min_representations': float('inf'),
+        'numbers_with_max': [],
+        'numbers_with_min': [],
+        'avg_representations': 0
+    }
+    
+    total_reps = 0
+    
+    for n, pairs in results.items():
+        num_pairs = len(pairs)
+        
+        if num_pairs > 0:
+            analysis['verified'] += 1
+        else:
+            analysis['failed'].append(n)
+        
+        total_reps += num_pairs
+        
+        if num_pairs > analysis['max_representations']:
+            analysis['max_representations'] = num_pairs
+            analysis['numbers_with_max'] = [n]
+        elif num_pairs == analysis['max_representations']:
+            analysis['numbers_with_max'].append(n)
+        
+        if num_pairs < analysis['min_representations']:
+            analysis['min_representations'] = num_pairs
+            analysis['numbers_with_min'] = [n]
+        elif num_pairs == analysis['min_representations']:
+            analysis['numbers_with_min'].append(n)
+    
+    if analysis['total_numbers'] > 0:
+        analysis['avg_representations'] = total_reps / analysis['total_numbers']
+    
+    return analysis
 
 
-def print_goldbach_verification(n, pairs):
+def print_goldbach_results(results, show_all=False, max_display=20):
     """Print Goldbach verification results in a formatted way."""
-    print(f"\n{'=' * 60}")
-    print(f"Goldbach Verification for {n}")
-    print(f"{'=' * 60}")
+    print(f"\n{'=' * 70}")
+    print("Goldbach Conjecture Verification Results")
+    print(f"{'=' * 70}")
+    print(f"Range: {min(results.keys())} to {max(results.keys())}")
+    print(f"Total even numbers verified: {len(results)}")
     
-    if not pairs:
-        print(f"✗ Could not verify: {n} cannot be expressed as sum of two primes")
-        print("   (This would disprove Goldbach's Conjecture!)")
+    # Count how many were successfully verified
+    verified = sum(1 for pairs in results.values() if len(pairs) > 0)
+    print(f"Successfully verified: {verified}/{len(results)}")
+    
+    if verified < len(results):
+        failed = [n for n, pairs in results.items() if len(pairs) == 0]
+        print(f"\n⚠️  Failed to verify: {failed}")
     else:
-        print(f"✓ Verified: {n} can be expressed as sum of two primes")
-        print(f"   Number of representations: {len(pairs)}")
-        print(f"\n   Goldbach pairs:")
+        print("\n✓ All numbers verified!")
+    
+    print(f"\n{'=' * 70}")
+    print("Sample Goldbach Representations")
+    print(f"{'=' * 70}")
+    
+    display_count = 0
+    for n, pairs in sorted(results.items()):
+        if not show_all and display_count >= max_display:
+            remaining = len(results) - display_count
+            print(f"\n... and {remaining} more even numbers")
+            break
         
-        # Show up to 10 pairs
-        display_pairs = pairs[:10]
-        for p, q in display_pairs:
-            print(f"      {p:>6} + {q:<6} = {n}")
+        print(f"\n{n} = ", end="")
+        if len(pairs) == 0:
+            print("NO REPRESENTATION FOUND!")
+        elif len(pairs) == 1:
+            p1, p2 = pairs[0]
+            print(f"{p1} + {p2}")
+        else:
+            # Show first pair on same line
+            p1, p2 = pairs[0]
+            print(f"{p1} + {p2}")
+            # Show remaining pairs indented
+            for p1, p2 in pairs[1:]:
+                print(f"{' ' * (len(str(n)) + 4)}{p1} + {p2}")
         
-        if len(pairs) > 10:
-            print(f"      ... and {len(pairs) - 10} more pairs")
+        display_count += 1
+    
+    print(f"\n{'=' * 70}")
 
 
-def analyze_goldbach_pattern(start, end):
-    """Analyze patterns in Goldbach representations."""
-    print(f"\n{'=' * 60}")
-    print(f"Goldbach Pattern Analysis ({start} to {end})")
-    print(f"{'=' * 60}")
+def print_goldbach_analysis(analysis):
+    """Print analysis of Goldbach representations."""
+    print(f"\n{'=' * 70}")
+    print("Goldbach Representations Analysis")
+    print(f"{'=' * 70}")
     
-    results = verify_goldbach_range(start, end)
+    print(f"\nTotal even numbers analyzed: {analysis['total_numbers']}")
+    print(f"Successfully verified: {analysis['verified']}")
     
-    all_verified = all(r['verified'] for r in results.values())
-    
-    if all_verified:
-        print(f"\n✓ All {len(results)} even numbers verified!")
-        
-        # Find number with most representations
-        max_reps = max(r['pair_count'] for r in results.values())
-        max_nums = [n for n, r in results.items() if r['pair_count'] == max_reps]
-        
-        print(f"\n   Most representations: {max_reps}")
-        print(f"   Number(s) with most representations: {max_nums}")
-        
-        # Find number with fewest representations
-        min_reps = min(r['pair_count'] for r in results.values())
-        min_nums = [n for n, r in results.items() if r['pair_count'] == min_reps]
-        
-        print(f"\n   Fewest representations: {min_reps}")
-        print(f"   Number(s) with fewest representations: {min_nums}")
-        
-        # Show some examples
-        print(f"\n   Sample representations:")
-        sample_nums = list(results.keys())[:5]
-        for n in sample_nums:
-            r = results[n]
-            if r['first_pair']:
-                p, q = r['first_pair']
-                print(f"      {n} = {p} + {q}  ({r['pair_count']} total pairs)")
+    if analysis['failed']:
+        print(f"Failed to verify: {len(analysis['failed'])}")
+        print(f"  Numbers: {analysis['failed']}")
     else:
-        print("\n✗ CONJECTURE DISPROVED!")
-        failed = [n for n, r in results.items() if not r['verified']]
-        print(f"   Failed for: {failed}")
+        print("✓ All numbers have at least one representation!")
+    
+    print(f"\nRepresentation Statistics:")
+    print(f"  Average representations per number: {analysis['avg_representations']:.2f}")
+    print(f"  Maximum representations: {analysis['max_representations']}")
+    print(f"  Minimum representations: {analysis['min_representations']}")
+    
+    if analysis['numbers_with_max']:
+        print(f"\n  Numbers with most representations ({analysis['max_representations']}):")
+        for n in analysis['numbers_with_max'][:5]:
+            print(f"    {n}")
+        if len(analysis['numbers_with_max']) > 5:
+            print(f"    ... and {len(analysis['numbers_with_max']) - 5} more")
+    
+    print(f"\n{'=' * 70}")
+
+
+def find_weak_goldbach_partitions(n):
+    """
+    Find all ways to express an odd number as sum of three primes (Weak Goldbach).
+    The weak Goldbach conjecture (now proven) states that every odd number > 5
+    can be expressed as the sum of three odd primes.
+    
+    Args:
+        n: Odd number to find prime triple for
+    
+    Returns:
+        List of tuples (p1, p2, p3) where p1 + p2 + p3 = n
+    """
+    if n <= 5 or n % 2 == 0:
+        return []
+    
+    primes = sieve_of_eratosthenes(n)
+    primes_set = set(primes)
+    triplets = []
+    
+    # Find all triplets where p1 + p2 + p3 = n
+    for i, p1 in enumerate(primes):
+        if p1 > n // 3:
+            break
+        for j in range(i, len(primes)):
+            p2 = primes[j]
+            if p1 + p2 > n - 2:
+                break
+            p3 = n - p1 - p2
+            if p3 >= p2 and p3 in primes_set:
+                triplets.append((p1, p2, p3))
+    
+    return triplets
 
 
 def main():
-    print("=" * 60)
-    print("Goldbach Conjecture Verifier")
-    print("=" * 60)
-    print("\nGoldbach's Conjecture (1742):")
-    print("Every even integer greater than 2 can be expressed as")
-    print("the sum of two prime numbers.")
-    print("\nStatus: UNPROVEN (but verified for numbers up to 4 × 10^18)")
+    print("=" * 70)
+    print("GOLDBACH CONJECTURE VERIFIER")
+    print("=" * 70)
+    print("\nThe Goldbach Conjecture (1742):")
+    print("Every even integer greater than 2 can be expressed as the")
+    print("sum of two prime numbers.")
+    print("\nStatus: UNPROVEN (but verified for numbers up to 4 × 10¹⁸)")
+    print("=" * 70)
     
-    # Test specific even numbers
-    test_numbers = [4, 6, 10, 28, 100, 200, 1000]
+    # Verify small range with detailed output
+    print("\n" + "=" * 70)
+    print("Verification for small even numbers (4 to 50)")
+    print("=" * 70)
     
-    for n in test_numbers:
-        success, pairs = verify_goldbach(n)
-        print_goldbach_verification(n, pairs)
+    results_small = verify_goldbach_range(4, 50)
+    print_goldbach_results(results_small, show_all=True)
     
-    # Analyze patterns in different ranges
-    ranges = [(4, 50), (100, 150)]
+    analysis_small = analyze_goldbach_representations(results_small)
+    print_goldbach_analysis(analysis_small)
     
-    for start, end in ranges:
-        analyze_goldbach_pattern(start, end)
+    # Verify larger range with summary
+    print("\n" + "=" * 70)
+    print("Verification for larger range (4 to 200)")
+    print("=" * 70)
     
-    # Show interesting facts
-    print(f"\n{'=' * 60}")
-    print("Interesting Facts")
-    print(f"{'=' * 60}")
+    results_large = verify_goldbach_range(4, 200)
+    print_goldbach_results(results_large, show_all=False, max_display=15)
     
-    print("\n• 4 = 2 + 2 is the smallest even number in the conjecture")
-    print("• As numbers grow larger, they typically have MORE Goldbach pairs")
-    print("• The conjecture has been verified by computer for extremely large numbers")
-    print("• Despite extensive verification, no mathematical proof exists")
-    print("• A related 'weak' Goldbach conjecture (for odd numbers) was proven in 2013")
+    analysis_large = analyze_goldbach_representations(results_large)
+    print_goldbach_analysis(analysis_large)
     
-    print(f"\n{'=' * 60}")
+    # Show interesting specific cases
+    print("\n" + "=" * 70)
+    print("Interesting Observations")
+    print("=" * 70)
+    
+    # Find numbers with many representations
+    many_reps = [(n, len(pairs)) for n, pairs in results_large.items() if len(pairs) >= 10]
+    many_reps.sort(key=lambda x: x[1], reverse=True)
+    
+    print("\nEven numbers with 10+ representations:")
+    for n, count in many_reps[:10]:
+        print(f"  {n}: {count} representations")
+    
+    # Demonstrate weak Goldbach (bonus)
+    print("\n" + "=" * 70)
+    print("BONUS: Weak Goldbach Conjecture (Proven in 2013)")
+    print("=" * 70)
+    print("Every odd number > 5 can be expressed as sum of three odd primes")
+    
+    odd_numbers = [7, 9, 15, 21, 27, 33]
+    for n in odd_numbers:
+        triplets = find_weak_goldbach_partitions(n)
+        print(f"\n{n} has {len(triplets)} representation(s):")
+        for i, (p1, p2, p3) in enumerate(triplets[:3]):
+            print(f"  {p1} + {p2} + {p3}")
+        if len(triplets) > 3:
+            print(f"  ... and {len(triplets) - 3} more")
+    
+    print("\n" + "=" * 70)
+    print("Mathematical Significance:")
+    print("- Goldbach's conjecture is one of the oldest unsolved problems")
+    print("- It has been verified computationally to extremely large numbers")
+    print("- Related to the distribution of prime numbers")
+    print("- Connects to cryptography and number theory")
+    print("=" * 70)
 
 
 if __name__ == "__main__":

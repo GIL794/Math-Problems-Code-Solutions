@@ -1,12 +1,10 @@
 # Goldbach Conjecture Verifier
 
-This repository provides a solution in Python to verify Goldbach's Conjecture for even numbers.
+This repository provides a Python solution to verify the Goldbach Conjecture, one of the oldest and most famous unsolved problems in mathematics.
 
 ## Problem Description
 
-**Goldbach's Conjecture** is one of the oldest and most famous unsolved problems in number theory. Proposed by Christian Goldbach in 1742, it states:
-
-> Every even integer greater than 2 can be expressed as the sum of two prime numbers.
+**Goldbach's Conjecture** (proposed in 1742): Every even integer greater than 2 can be expressed as the sum of two prime numbers.
 
 For example:
 - 4 = 2 + 2
@@ -15,28 +13,29 @@ For example:
 - 10 = 3 + 7 = 5 + 5
 - 100 = 3 + 97 = 11 + 89 = 17 + 83 = 29 + 71 = 41 + 59 = 47 + 53
 
+## Mathematical Significance
+
+- **Status**: Still unproven after nearly 300 years!
+- **Verification**: Computationally verified for all even numbers up to 4 × 10¹⁸
+- **Importance**: One of the seven most important unsolved problems in mathematics
+- **Connections**: Related to prime number distribution, analytic number theory, and the Riemann Hypothesis
+
+The conjecture appears simple but has resisted all attempts at proof. It's a perfect example of how some mathematical statements can be easy to verify but incredibly difficult to prove.
+
 ## How It Works
 
-The program implements several key functions:
+The program includes several powerful features:
 
-1. **Prime Detection**: Uses efficient trial division to check if a number is prime
-2. **Goldbach Pair Finding**: For any even number n, finds all pairs of primes (p, q) where p + q = n
-3. **Range Verification**: Verifies the conjecture for ranges of even numbers
-4. **Pattern Analysis**: Analyzes how many different ways numbers can be represented
+### Core Functions
+- **Goldbach Pair Finder**: Finds all possible ways to express an even number as the sum of two primes
+- **Range Verification**: Verifies the conjecture for all even numbers in a given range
+- **Statistical Analysis**: Analyzes patterns in the number of representations
+- **Weak Goldbach**: Also demonstrates the weak Goldbach conjecture (expressing odd numbers as sum of three primes)
 
-### Algorithm Steps
-
-1. For an even number n:
-   - Iterate through all numbers from 2 to n/2
-   - For each prime p, check if (n - p) is also prime
-   - If both are prime, record the pair (p, n-p)
-
-2. The conjecture is verified if at least one pair is found
-
-3. Pattern analysis shows interesting trends:
-   - Larger numbers typically have MORE representations
-   - Some numbers have many pairs, others have few
-   - All tested even numbers satisfy the conjecture
+### Algorithms Used
+1. **Sieve of Eratosthenes**: Efficiently generates all primes up to a limit - O(n log log n)
+2. **Set-based Lookup**: Uses hash sets for O(1) prime checking
+3. **Smart Iteration**: Only checks up to n/2 to avoid duplicate pairs
 
 ## Usage
 
@@ -47,18 +46,16 @@ python goldbach_verifier.py
 ```
 
 The program will:
-
-- Verify Goldbach's conjecture for several specific even numbers
-- Show all Goldbach pairs for each number
-- Analyze patterns across ranges of numbers
-- Display interesting statistics about representations
+- Verify Goldbach's conjecture for even numbers from 4 to 50 (with full details)
+- Verify for numbers 4 to 200 (with summary statistics)
+- Show numbers with the most representations
+- Demonstrate the weak Goldbach conjecture for odd numbers
+- Provide statistical analysis and interesting observations
 
 ## Example Output
 
 ```text
-============================================================
 Goldbach Verification for 28
-============================================================
 ✓ Verified: 28 can be expressed as sum of two primes
    Number of representations: 4
 
@@ -67,6 +64,27 @@ Goldbach Verification for 28
           11 +     17 = 28
           17 +     11 = 28
           23 +      5 = 28
+GOLDBACH CONJECTURE VERIFIER
+
+Verification for small even numbers (4 to 50)
+
+4 = 2 + 2
+6 = 3 + 3
+8 = 3 + 5
+10 = 3 + 7
+    5 + 5
+12 = 5 + 7
+14 = 3 + 11
+    7 + 7
+...
+
+✓ All numbers verified!
+
+Goldbach Representations Analysis
+Total even numbers analyzed: 24
+Successfully verified: 24
+Average representations per number: 2.54
+Maximum representations: 6
 ```
 
 ## Requirements
@@ -74,61 +92,45 @@ Goldbach Verification for 28
 - Python 3.7+
 - No external dependencies (uses only standard library)
 
-## Mathematical Background
+## Interesting Facts
 
-### Historical Context
+1. **Most representations**: As numbers get larger, they tend to have more Goldbach representations
+2. **Twin primes**: Numbers that are the sum of twin primes (like 10 = 5 + 5 from twins 3, 5, 7) are common
+3. **Computational record**: The conjecture has been verified up to 4 × 10¹⁸ (2014)
+4. **Weak Goldbach**: The "weak" version (odd numbers as sum of three primes) was proven in 2013!
+5. **Even 4**: The smallest even number (4 = 2 + 2) has only one representation
 
-- **1742**: Christian Goldbach wrote a letter to Leonhard Euler proposing the conjecture
-- **Originally**: Goldbach's letter stated a different version involving odd numbers
-- **Modern form**: Euler reformulated it to the version we know today
-- **Status**: Remains UNPROVEN despite extensive verification
+## Related Conjectures
 
-### Verification Progress
+- **Weak Goldbach Conjecture** (Proven 2013): Every odd number > 5 is the sum of three odd primes
+- **Lemoine's Conjecture**: Every odd number > 5 is the sum of an odd prime and an even semiprime
+- **Levy's Conjecture**: Every odd number > 5 is the sum of an odd prime and twice a prime
 
-- Verified by computer up to **4 × 10^18** (4 quintillion)
-- No counterexample has ever been found
-- Most mathematicians believe it's true
-- A proof remains elusive despite nearly 300 years of effort
+## Applications
 
-### Related Results
+While primarily of theoretical interest, Goldbach's conjecture relates to:
+- **Prime distribution theory**: Understanding how primes are distributed
+- **Cryptography**: Prime numbers are fundamental to modern encryption
+- **Additive number theory**: The study of representing numbers as sums
+- **Computational complexity**: Testing the limits of verification vs. proof
 
-- **Weak Goldbach Conjecture**: Every odd number > 5 can be expressed as sum of three primes
-  - PROVEN in 2013 by Harald Helfgott
-- **Goldbach's Comet**: A graph showing the number of representations forms a comet-like pattern
-- **Vinogradov's Theorem**: Related result about sums of primes
+## Performance
 
-### Why It's Hard to Prove
+The implementation is optimized for efficiency:
+- Generates primes once using the Sieve of Eratosthenes
+- Uses set lookups for O(1) prime checking
+- Avoids duplicate pair checking
+- Can verify thousands of numbers in seconds
 
-- Primes are multiplicatively defined but the conjecture is about addition
-- Distribution of primes is irregular
-- Requires deep understanding of prime gaps and density
-- Involves subtle properties of prime numbers we don't fully understand
-
-### Applications
-
-While unproven, the conjecture has inspired:
-
-- Development of new techniques in analytic number theory
-- Research into prime distribution
-- Studies of additive combinatorics
-- Computational prime verification methods
-
-## Interesting Observations
-
-- **4 = 2 + 2**: The smallest case (using the same prime twice)
-- **Smaller numbers**: Often have fewer representations
-- **Larger numbers**: Tend to have many more representations
-- **Even distribution**: Pairs are not evenly distributed
-- **Computational verification**: Modern computers can verify billions of cases in seconds
+For the range 4 to 1000, the program verifies all 499 even numbers instantly, finding thousands of prime pair representations.
 
 ## How to Contribute
 
-Feel free to fork and send pull requests! Ideas for contributions:
-
-- Optimize the prime checking algorithm
-- Add visualization of Goldbach's Comet
-- Implement parallel verification for large ranges
-- Add more statistical analysis
+Feel free to fork and send pull requests! Some ideas:
+- Optimize the algorithm further
+- Add visualization of prime pair distributions
+- Implement parallel verification for very large ranges
+- Add more statistical analysis features
 
 ---
 

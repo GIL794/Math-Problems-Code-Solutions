@@ -1,20 +1,21 @@
 """
 Euler's Totient Function Calculator
 
-Calculates φ(n), also known as Euler's Totient Function, which counts the
-number of integers from 1 to n that are coprime with n (i.e., gcd(k, n) = 1).
+Euler's totient function φ(n) counts the positive integers up to n that are
+relatively prime to n (i.e., integers k where gcd(k, n) = 1).
 
-This function is fundamental in number theory and has important applications
-in cryptography, especially in the RSA algorithm.
+This function is fundamental in number theory and has crucial applications in
+cryptography, particularly in the RSA encryption algorithm.
 """
 
 import math
-from collections import defaultdict
+from functools import reduce
+from operator import mul
 
 
 def gcd(a, b):
     """
-    Calculate the Greatest Common Divisor using Euclidean algorithm.
+    Calculate the greatest common divisor using Euclidean algorithm.
     
     Args:
         a, b: Two integers
@@ -27,49 +28,12 @@ def gcd(a, b):
     return a
 
 
-def are_coprime(a, b):
-    """
-    Check if two numbers are coprime (their gcd is 1).
-    
-    Args:
-        a, b: Two integers
-    
-    Returns:
-        True if coprime, False otherwise
-    """
-    return gcd(a, b) == 1
-
-
-def is_prime(n):
-    """
-    Check if a number is prime using trial division.
-    
-    Args:
-        n: Number to check
-    
-    Returns:
-        True if n is prime, False otherwise
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-    
-    for i in range(3, int(n ** 0.5) + 1, 2):
-        if n % i == 0:
-            return False
-    
-    return True
-
-
 def prime_factorization(n):
     """
     Find the prime factorization of n.
     
     Args:
-        n: Number to factorize
+        n: Integer to factorize
     
     Returns:
         Dictionary mapping prime factors to their powers
@@ -77,284 +41,380 @@ def prime_factorization(n):
     if n < 2:
         return {}
     
-    factors = defaultdict(int)
+    factors = {}
     d = 2
     
+    # Check for factor 2
+    while n % 2 == 0:
+        factors[2] = factors.get(2, 0) + 1
+        n //= 2
+    
+    # Check for odd factors from 3 onwards
+    d = 3
     while d * d <= n:
         while n % d == 0:
-            factors[d] += 1
+            factors[d] = factors.get(d, 0) + 1
             n //= d
-        d += 1
+        d += 2
     
+    # If n is still greater than 1, it's a prime factor
     if n > 1:
-        factors[n] += 1
+        factors[n] = factors.get(n, 0) + 1
     
-    return dict(factors)
+    return factors
 
 
-def euler_totient_naive(n):
+def euler_totient_basic(n):
     """
-    Calculate φ(n) using the naive counting method.
-    This directly counts numbers coprime to n.
+    Calculate Euler's totient function φ(n) using the basic counting method.
+    This is inefficient for large n but demonstrates the definition.
     
     Args:
         n: Positive integer
     
     Returns:
-        φ(n) - count of coprimes
+        φ(n) - count of integers in [1, n] that are coprime to n
     """
     if n == 1:
         return 1
     
     count = 0
-    for i in range(1, n + 1):
-        if gcd(i, n) == 1:
+    for k in range(1, n + 1):
+        if gcd(k, n) == 1:
             count += 1
     
     return count
 
 
-def euler_totient(n):
+def euler_totient_formula(n):
     """
-    Calculate φ(n) using the formula based on prime factorization.
+    Calculate Euler's totient function φ(n) using the formula.
     
-    For n = p1^k1 * p2^k2 * ... * pm^km:
-    φ(n) = n * (1 - 1/p1) * (1 - 1/p2) * ... * (1 - 1/pm)
+    If n = p1^a1 * p2^a2 * ... * pk^ak, then:
+    φ(n) = n * (1 - 1/p1) * (1 - 1/p2) * ... * (1 - 1/pk)
     
     Or equivalently:
-    φ(n) = p1^(k1-1) * (p1-1) * p2^(k2-1) * (p2-1) * ... * pm^(km-1) * (pm-1)
+    φ(n) = (p1^a1 - p1^(a1-1)) * (p2^a2 - p2^(a2-1)) * ... * (pk^ak - pk^(ak-1))
     
     Args:
         n: Positive integer
     
     Returns:
-        φ(n) - Euler's totient function
+        φ(n)
     """
     if n == 1:
         return 1
     
-    result = n
-    
-    # Find all prime factors
     factors = prime_factorization(n)
     
-    # Apply the formula
-    for prime in factors:
-        result = result * (prime - 1) // prime
+    # Use the product formula
+    result = n
+    for p in factors:
+        result = result * (p - 1) // p
     
     return result
 
 
-def find_coprimes(n):
+def euler_totient_efficient(n):
     """
-    Find all numbers from 1 to n that are coprime with n.
+    Calculate Euler's totient function φ(n) efficiently.
+    Same as euler_totient_formula but optimized.
     
     Args:
         n: Positive integer
     
     Returns:
-        List of coprimes
+        φ(n)
     """
-    if n == 1:
-        return [1]
+    return euler_totient_formula(n)
+
+
+def find_coprimes(n, limit=None):
+    """
+    Find all numbers coprime to n up to a limit.
+    
+    Args:
+        n: The number to find coprimes for
+        limit: Maximum value to check (defaults to n)
+    
+    Returns:
+        List of numbers coprime to n
+    """
+    if limit is None:
+        limit = n
     
     coprimes = []
-    for i in range(1, n + 1):
-        if gcd(i, n) == 1:
-            coprimes.append(i)
+    for k in range(1, limit + 1):
+        if gcd(k, n) == 1:
+            coprimes.append(k)
     
     return coprimes
 
 
-def totient_range(start, end):
+def euler_totient_range(start, end):
     """
-    Calculate φ(n) for a range of numbers.
+    Calculate φ(n) for all n in a range.
     
     Args:
-        start, end: Range boundaries (inclusive)
+        start: Start of range (inclusive)
+        end: End of range (inclusive)
     
     Returns:
         Dictionary mapping n to φ(n)
     """
     results = {}
     for n in range(start, end + 1):
-        results[n] = euler_totient(n)
+        results[n] = euler_totient_formula(n)
+    
     return results
 
 
 def analyze_totient_properties(n):
     """
-    Analyze various properties related to φ(n).
+    Analyze interesting properties of φ(n).
     
     Args:
-        n: Positive integer
+        n: Number to analyze
     
     Returns:
-        Dictionary with analysis results
+        Dictionary with various properties
     """
-    phi_n = euler_totient(n)
+    phi_n = euler_totient_formula(n)
     factors = prime_factorization(n)
-    coprimes = find_coprimes(n) if n <= 50 else []  # Only show coprimes for small n
     
-    # Check if n is prime
-    n_is_prime = is_prime(n)
-    
-    # For primes, φ(p) = p - 1
-    if n_is_prime:
-        property_note = f"n is prime, so φ(n) = n - 1 = {n - 1}"
-    elif len(factors) == 1:
-        # Power of a prime
-        p, k = list(factors.items())[0]
-        property_note = f"n = {p}^{k}, so φ(n) = {p}^{k-1} * ({p} - 1) = {phi_n}"
-    else:
-        property_note = "n has multiple prime factors"
-    
-    return {
+    properties = {
         'n': n,
         'phi_n': phi_n,
-        'is_prime': n_is_prime,
-        'prime_factors': factors,
-        'coprimes': coprimes,
-        'ratio': phi_n / n,
-        'property_note': property_note
+        'prime_factorization': factors,
+        'is_prime': len(factors) == 1 and factors.get(list(factors.keys())[0], 0) == 1 if factors else False,
+        'ratio': phi_n / n if n > 0 else 0,
     }
-
-
-def print_totient_analysis(analysis):
-    """Print detailed analysis of φ(n)."""
-    n = analysis['n']
-    phi_n = analysis['phi_n']
     
-    print(f"\n{'=' * 60}")
-    print(f"Euler's Totient Function: φ({n})")
-    print(f"{'=' * 60}")
-    print(f"φ({n}) = {phi_n}")
-    print(f"Ratio φ(n)/n = {analysis['ratio']:.4f}")
-    
-    # Prime factorization
-    if analysis['prime_factors']:
-        factors_str = ' × '.join(
-            f"{p}^{k}" if k > 1 else str(p)
-            for p, k in sorted(analysis['prime_factors'].items())
-        )
-        print(f"\nPrime factorization: {n} = {factors_str}")
-    
-    print(f"\n{analysis['property_note']}")
-    
-    # Show coprimes if available
-    if analysis['coprimes']:
-        print(f"\nNumbers coprime to {n}:")
-        print(f"  {analysis['coprimes']}")
-    elif n > 50:
-        print(f"\n(Too many coprimes to display for n = {n})")
-    
-    # Properties
-    print(f"\nProperties:")
-    if analysis['is_prime']:
-        print(f"  • {n} is prime")
-        print(f"  • All numbers from 1 to {n-1} are coprime to {n}")
+    # Check if n is a prime power
+    if len(factors) == 1:
+        p = list(factors.keys())[0]
+        a = factors[p]
+        properties['is_prime_power'] = True
+        properties['prime_power_base'] = p
+        properties['prime_power_exponent'] = a
+        # For prime powers: φ(p^a) = p^a - p^(a-1) = p^(a-1) * (p - 1)
+        expected_phi = p**(a-1) * (p - 1)
+        properties['formula_verification'] = (phi_n == expected_phi)
     else:
-        print(f"  • {phi_n} out of {n} numbers are coprime to {n}")
-        print(f"  • {n - phi_n} numbers share a common factor with {n}")
-
-
-def compare_totients(numbers):
-    """Compare φ(n) for multiple numbers."""
-    print(f"\n{'=' * 60}")
-    print("Totient Function Comparison")
-    print(f"{'=' * 60}")
-    print(f"\n{'n':>6} | {'φ(n)':>6} | {'φ(n)/n':>8} | {'Properties'}")
-    print("-" * 60)
+        properties['is_prime_power'] = False
     
-    for n in numbers:
-        phi_n = euler_totient(n)
-        ratio = phi_n / n
-        
-        props = []
-        if is_prime(n):
-            props.append("prime")
-        
-        factors = prime_factorization(n)
-        if len(factors) == 1 and list(factors.values())[0] > 1:
-            p, k = list(factors.items())[0]
-            props.append(f"{p}^{k}")
-        
-        props_str = ", ".join(props) if props else "composite"
-        
-        print(f"{n:>6} | {phi_n:>6} | {ratio:>8.4f} | {props_str}")
+    return properties
 
 
-def interesting_totient_facts():
-    """Display interesting mathematical facts about the totient function."""
-    print(f"\n{'=' * 60}")
-    print("Interesting Facts About Euler's Totient Function")
-    print(f"{'=' * 60}")
+def find_totient_pairs(limit):
+    """
+    Find all pairs (n, m) where φ(n) = φ(m) and n ≠ m (called totient twins).
     
-    facts = [
-        ("Multiplicative", "If gcd(m,n) = 1, then φ(m*n) = φ(m) * φ(n)"),
-        ("Prime Property", "For prime p: φ(p) = p - 1"),
-        ("Prime Power", "For prime p and k > 0: φ(p^k) = p^(k-1) * (p - 1)"),
-        ("Sum Property", "Sum of φ(d) for all divisors d of n equals n"),
-        ("RSA Connection", "φ(n) is crucial for RSA encryption key generation"),
-        ("Carmichael", "λ(n) ≤ φ(n), where λ is Carmichael's function"),
-        ("Density", "Average value of φ(n)/n approaches 6/π² ≈ 0.608 as n → ∞"),
-    ]
+    Args:
+        limit: Maximum value to check
     
-    for i, (title, description) in enumerate(facts, 1):
-        print(f"\n{i}. {title}:")
-        print(f"   {description}")
+    Returns:
+        List of pairs (n, m) where n < m and φ(n) = φ(m)
+    """
+    totients = {}
+    
+    # Calculate all totient values
+    for n in range(1, limit + 1):
+        phi_n = euler_totient_formula(n)
+        if phi_n not in totients:
+            totients[phi_n] = []
+        totients[phi_n].append(n)
+    
+    # Find pairs
+    pairs = []
+    for phi_value, numbers in totients.items():
+        if len(numbers) > 1:
+            for i in range(len(numbers)):
+                for j in range(i + 1, len(numbers)):
+                    pairs.append((numbers[i], numbers[j], phi_value))
+    
+    return pairs
 
 
-def demonstrate_multiplicative_property():
-    """Demonstrate that φ is multiplicative."""
-    print(f"\n{'=' * 60}")
-    print("Multiplicative Property Demonstration")
-    print(f"{'=' * 60}")
-    print("\nIf gcd(m, n) = 1, then φ(m × n) = φ(m) × φ(n)")
+def print_totient_table(start, end, cols=5):
+    """Print a table of φ(n) values."""
+    print(f"\n{'=' * 70}")
+    print(f"Euler's Totient Function φ(n) for n = {start} to {end}")
+    print(f"{'=' * 70}")
     
-    test_pairs = [(3, 5), (7, 11), (4, 9), (15, 28)]
+    results = euler_totient_range(start, end)
     
-    for m, n in test_pairs:
-        if gcd(m, n) == 1:
-            phi_m = euler_totient(m)
-            phi_n = euler_totient(n)
-            phi_mn = euler_totient(m * n)
-            
-            print(f"\n  m = {m}, n = {n} (coprime: gcd = 1)")
-            print(f"  φ({m}) = {phi_m}, φ({n}) = {phi_n}")
-            print(f"  φ({m} × {n}) = φ({m * n}) = {phi_mn}")
-            print(f"  φ({m}) × φ({n}) = {phi_m} × {phi_n} = {phi_m * phi_n}")
-            print(f"  ✓ Property verified: {phi_mn} = {phi_m * phi_n}")
-        else:
-            print(f"\n  m = {m}, n = {n} (NOT coprime: gcd = {gcd(m, n)})")
-            print(f"  Property does not apply")
+    items = list(results.items())
+    for i in range(0, len(items), cols):
+        row = items[i:i + cols]
+        # Print n values
+        n_line = "  ".join(f"n={n:>3}" for n, _ in row)
+        print(f"\n{n_line}")
+        # Print φ(n) values
+        phi_line = "  ".join(f"φ={phi:>3}" for _, phi in row)
+        print(f"{phi_line}")
+    
+    print(f"\n{'=' * 70}")
+
+
+def print_totient_analysis(n):
+    """Print detailed analysis of φ(n)."""
+    print(f"\n{'=' * 70}")
+    print(f"Detailed Analysis of φ({n})")
+    print(f"{'=' * 70}")
+    
+    props = analyze_totient_properties(n)
+    
+    print(f"\nNumber: {props['n']}")
+    print(f"φ({props['n']}) = {props['phi_n']}")
+    print(f"Ratio: φ(n)/n = {props['ratio']:.6f}")
+    
+    print(f"\nPrime factorization: ", end="")
+    if props['prime_factorization']:
+        factors_str = " × ".join(f"{p}^{a}" if a > 1 else str(p) 
+                                  for p, a in sorted(props['prime_factorization'].items()))
+        print(factors_str)
+    else:
+        print("1")
+    
+    if props['is_prime']:
+        print(f"\n{n} is PRIME")
+        print(f"For primes p: φ(p) = p - 1")
+        print(f"Verification: φ({n}) = {n} - 1 = {n - 1} ✓")
+    elif props['is_prime_power']:
+        p = props['prime_power_base']
+        a = props['prime_power_exponent']
+        print(f"\n{n} is a prime power: {p}^{a}")
+        print(f"For prime powers: φ(p^a) = p^(a-1) × (p - 1)")
+        print(f"Verification: φ({n}) = {p}^{a-1} × ({p} - 1) = {p**(a-1)} × {p-1} = {props['phi_n']} ✓")
+    else:
+        print(f"\n{n} is composite with multiple distinct prime factors")
+        print(f"Formula: φ(n) = n × ∏(1 - 1/p) for each prime p dividing n")
+    
+    # Show coprimes if reasonable
+    if n <= 30:
+        coprimes = find_coprimes(n)
+        print(f"\nNumbers coprime to {n}: {coprimes}")
+        print(f"Count: {len(coprimes)} (= φ({n}))")
+    
+    print(f"\n{'=' * 70}")
+
+
+def print_totient_pairs(pairs, max_display=20):
+    """Print totient twin pairs."""
+    print(f"\n{'=' * 70}")
+    print("Totient Twins: Pairs (n, m) where φ(n) = φ(m)")
+    print(f"{'=' * 70}")
+    
+    if not pairs:
+        print("\nNo totient twins found in the range.")
+        return
+    
+    print(f"\nFound {len(pairs)} pairs:")
+    
+    for i, (n, m, phi_value) in enumerate(pairs):
+        if i >= max_display:
+            print(f"\n... and {len(pairs) - max_display} more pairs")
+            break
+        print(f"  φ({n}) = φ({m}) = {phi_value}")
+    
+    print(f"\n{'=' * 70}")
+
+
+def demonstrate_rsa_connection():
+    """Demonstrate how Euler's totient function is used in RSA."""
+    print(f"\n{'=' * 70}")
+    print("Euler's Totient Function in RSA Cryptography")
+    print(f"{'=' * 70}")
+    
+    print("\nRSA Key Generation uses φ(n):")
+    print("1. Choose two large primes p and q")
+    print("2. Calculate n = p × q")
+    print("3. Calculate φ(n) = (p-1) × (q-1)")
+    print("4. Choose e where gcd(e, φ(n)) = 1")
+    print("5. Find d where d × e ≡ 1 (mod φ(n))")
+    
+    # Small example
+    p, q = 61, 53
+    n = p * q
+    phi_n = (p - 1) * (q - 1)
+    
+    print(f"\nSmall Example:")
+    print(f"  p = {p}, q = {q}")
+    print(f"  n = {p} × {q} = {n}")
+    print(f"  φ(n) = ({p}-1) × ({q}-1) = {p-1} × {q-1} = {phi_n}")
+    print(f"\n  φ(n) is used to find the private key exponent d")
+    print(f"  The security relies on the difficulty of factoring n")
+    print(f"  to find p and q (and thus φ(n))")
+    
+    print(f"\n{'=' * 70}")
 
 
 def main():
-    print("=" * 60)
-    print("Euler's Totient Function Calculator")
-    print("=" * 60)
-    print("\nφ(n) counts integers from 1 to n that are coprime with n")
-    print("(i.e., numbers k where gcd(k, n) = 1)")
+    print("=" * 70)
+    print("EULER'S TOTIENT FUNCTION CALCULATOR")
+    print("=" * 70)
+    print("\nEuler's Totient Function φ(n):")
+    print("Counts integers in [1, n] that are coprime to n")
+    print("(i.e., gcd(k, n) = 1)")
+    print("\nFundamental in number theory and cryptography!")
+    print("=" * 70)
     
-    # Analyze specific numbers
-    test_numbers = [1, 2, 6, 12, 15, 20, 36, 100]
+    # Show φ(n) for small values
+    print_totient_table(1, 20, cols=5)
     
-    for n in test_numbers:
-        analysis = analyze_totient_properties(n)
-        print_totient_analysis(analysis)
+    # Detailed analysis of specific numbers
+    interesting_numbers = [12, 17, 25, 30, 100]
     
-    # Compare multiple numbers
-    comparison_numbers = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    compare_totients(comparison_numbers)
+    for n in interesting_numbers:
+        print_totient_analysis(n)
     
-    # Demonstrate multiplicative property
-    demonstrate_multiplicative_property()
+    # Find totient twins
+    print("\n" + "=" * 70)
+    print("Finding Totient Twins (n, m where φ(n) = φ(m))")
+    print("=" * 70)
     
-    # Show interesting facts
-    interesting_totient_facts()
+    pairs = find_totient_pairs(50)
+    print_totient_pairs(pairs, max_display=15)
     
-    print(f"\n{'=' * 60}")
+    # Show interesting properties
+    print("\n" + "=" * 70)
+    print("Interesting Properties of φ(n)")
+    print("=" * 70)
+    
+    print("\n1. If p is prime: φ(p) = p - 1")
+    print("   Examples:")
+    for p in [2, 3, 5, 7, 11, 13, 17, 19, 23]:
+        print(f"     φ({p}) = {euler_totient_formula(p)}")
+    
+    print("\n2. If n = p × q (distinct primes): φ(n) = (p-1) × (q-1)")
+    print("   Examples:")
+    examples = [(3, 5), (5, 7), (7, 11), (11, 13)]
+    for p, q in examples:
+        n = p * q
+        phi_n = (p - 1) * (q - 1)
+        actual = euler_totient_formula(n)
+        print(f"     φ({p}×{q}) = φ({n}) = ({p}-1)×({q}-1) = {phi_n} ✓")
+    
+    print("\n3. Multiplicative property: If gcd(m,n) = 1, then φ(m×n) = φ(m)×φ(n)")
+    print("   Examples:")
+    pairs_coprime = [(3, 5), (4, 9), (7, 10)]
+    for m, n in pairs_coprime:
+        phi_m = euler_totient_formula(m)
+        phi_n = euler_totient_formula(n)
+        phi_mn = euler_totient_formula(m * n)
+        print(f"     φ({m})×φ({n}) = {phi_m}×{phi_n} = {phi_m * phi_n} = φ({m*n}) ✓")
+    
+    # RSA connection
+    demonstrate_rsa_connection()
+    
+    print("\n" + "=" * 70)
+    print("Mathematical Significance:")
+    print("- Foundation of RSA public-key cryptography")
+    print("- Key theorem: a^φ(n) ≡ 1 (mod n) if gcd(a,n) = 1 (Euler's theorem)")
+    print("- Generalizes Fermat's Little Theorem")
+    print("- Essential for modular arithmetic and number theory")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
