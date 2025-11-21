@@ -1,0 +1,5 @@
+# Optional: NumPy for enhanced array operations
+# numpy>=1.19.0
+
+# Note: The code works with standard Python lists, so NumPy is optional
+
