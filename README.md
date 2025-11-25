@@ -25,16 +25,16 @@ Ever wondered how ancient Greek mathematicians, medieval number theorists, and m
 ### 🔢 Prime Number Sieve
 **The Ancient Algorithm That Powers Modern Security**
 
-Discover primes using the 2,300-year-old Sieve of Eratosthenes! These mysterious numbers are the building blocks of mathematics and the foundation of internet encryption. Find twin primes, analyze gaps, and explore the infinite landscape of primes.
+Discover primes using the 2,300-year-old Sieve of Eratosthenes! These mysterious numbers are the building blocks of mathematics and the foundation of internet encryption. Find twin primes, analyse gaps, and explore the infinite landscape of primes.
 
 🔗 [Explore Prime Numbers →](./Prime%20Number%20Sieve/)
 
 ---
 
-### 🐰 Fibonacci Sequence Analyzer
+### 🐰 Fibonacci Sequence Analyser
 **Nature's Secret Code**
 
-From sunflower spirals to galaxy arms, the Fibonacci sequence appears everywhere in nature. This analyzer generates Fibonacci numbers using multiple methods and reveals the golden ratio hidden within—the same ratio that makes the Mona Lisa's face so pleasing to the eye!
+From sunflower spirals to galaxy arms, the Fibonacci sequence appears everywhere in nature. This analyser generates Fibonacci numbers using multiple methods and reveals the golden ratio hidden within—the same ratio that makes the Mona Lisa's face so pleasing to the eye!
 
 🔗 [Discover Fibonacci →](./Fibonacci%20Sequence%20Analyzer/)
 
@@ -49,7 +49,7 @@ For thousands of years, magic squares have fascinated civilizations from China t
 
 ---
 
-### 🌀 Collatz Conjecture Analyzer
+### 🌀 Collatz Conjecture Analyser
 **The Most Dangerous Problem in Mathematics**
 
 Start with any number. If it's even, divide by 2. If it's odd, multiply by 3 and add 1. Repeat. **Will you always reach 1?** Nobody knows for sure! This unsolved problem has stumped mathematicians for over 80 years. Explore sequences and see why it's called the "Most Dangerous Problem."
@@ -97,7 +97,7 @@ A father has 49 coins (weighing 1g, 2g, 3g... up to 49g) and 7 children. Each ch
 ### 🎯 Goldbach Conjecture Verifier
 **One of Mathematics' Greatest Unsolved Mysteries**
 
-Can every even number greater than 2 be expressed as the sum of two primes? For 280 years, nobody has proven this, yet it's been verified for numbers up to 4 × 10¹⁸! This verifier finds all prime pair representations and analyzes patterns. It's like being a mathematical detective hunting for counterexamples!
+Can every even number greater than 2 be expressed as the sum of two primes? For 280 years, nobody has proven this, yet it's been verified for numbers up to 4 × 10¹⁸! This verifier finds all prime pair representations and analyses patterns. It's like being a mathematical detective hunting for counterexamples!
 
 🔗 [Investigate the Conjecture →](./Goldbach%20Conjecture%20Verifier/)
 
@@ -177,7 +177,7 @@ Tackle one of computer science's most celebrated challenges! Given cities and di
 
 The TSP is NP-hard: for 20 cities, there are over 60 quadrillion possible tours! This implementation compares exact, heuristic, and metaheuristic approaches to show how we can still solve real-world problems efficiently.
 
-**Applications**: UPS route optimization, circuit board drilling, DNA sequencing, network design
+**Applications**: UPS route optimisation, circuit board drilling, DNA sequencing, network design
 
 🔗 [Solve the TSP Challenge →](./Traveling%20Salesman%20Problem%20Solver/)
 
@@ -193,11 +193,11 @@ git clone https://github.com/GIL794/Math-Problems-Code-Solutions.git
 cd Math-Problems-Code-Solutions
 
 # Choose any project and dive in!
-cd "Fibonacci Sequence Analyzer"
+cd "Fibonacci Sequence Analyser"
 python fibonacci_analyzer.py
 
 # Or try the Collatz Conjecture
-cd "../Collatz Conjecture Analyzer"
+cd "../Collatz Conjecture Analyser"
 python collatz_analyzer.py
 ```
 
@@ -217,8 +217,8 @@ These aren't just mathematical curiosities—they're fundamental to technology, 
 - **Euler's Totient Function** - Core of RSA key generation
 - **Prime Numbers** - Foundation of all modern cryptography
 
-### Computer Science & Optimization 🌍
-- **Traveling Salesman Problem** - UPS saves millions in fuel costs annually through TSP optimization
+### Computer Science & Optimisation 🌍
+- **Traveling Salesman Problem** - UPS saves millions in fuel costs annually through TSP optimisation
 - **Fast Algorithms** - Binary exponentiation, dynamic programming power databases and search engines
 - **Circuit Board Manufacturing** - TSP algorithms minimize drill movement time
 - **Network Design** - Optimal routing protocols based on graph theory
@@ -230,7 +230,7 @@ These aren't just mathematical curiosities—they're fundamental to technology, 
 - **Collatz Conjecture** - Simple to state, impossible to prove
 
 ### Real-World Applications 💼
-- **Logistics & Delivery** - FedEx, UPS, Amazon route optimization
+- **Logistics & Delivery** - FedEx, UPS, Amazon route optimisation
 - **DNA Sequencing** - Genome assembly uses TSP-like algorithms  
 - **Financial Trading** - Fibonacci levels guide market analysis
 - **Art & Design** - Golden ratio creates aesthetically pleasing proportions
@@ -239,7 +239,7 @@ These aren't just mathematical curiosities—they're fundamental to technology, 
 ### The Economics of Algorithms 💰
 - A 1% improvement in UPS routing saves **$50 million annually**
 - Elliptic curves use **12x smaller keys** than RSA = less bandwidth, faster operations
-- TSP optimization reduces **delivery costs by 15-30%**
+- TSP optimisation reduces **delivery costs by 15-30%**
 - Bitcoin processes **$1 trillion** in transactions using ECC
 
 ## 🎯 From Puzzles to Million-Dollar Problems
@@ -258,7 +258,7 @@ This repository spans the entire spectrum of mathematical complexity:
 
 ### 🏆 **Elite & Unsolved**
 - **Riemann Hypothesis**: Million-dollar Millennium Prize Problem
-- **Traveling Salesman**: NP-hard optimization saving billions
+- **Traveling Salesman**: NP-hard optimisation saving billions
 - **Elliptic Curves**: Quantum-resistant cryptography protecting trillions
 
 **The same programming skills apply to all three levels!** Whether you're:
@@ -270,7 +270,7 @@ You're using logic, creativity, and the power of code to transform abstract math
 
 ## 🤝 Contribute & Explore
 
-Every project welcomes improvements, optimizations, and new features! Fork the repository, try the problems, suggest new ones, or optimize the algorithms. Mathematics and coding are collaborative adventures—join the journey!
+Every project welcomes improvements, optimisations, and new features! Fork the repository, try the problems, suggest new ones, or optimise the algorithms. Mathematics and coding are collaborative adventures—join the journey!
 
 ## 📜 License
 

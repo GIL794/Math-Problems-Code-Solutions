@@ -1,6 +1,6 @@
 # Traveling Salesman Problem (TSP) Solver
 
-This repository provides multiple algorithms to solve the classic Traveling Salesman Problem - one of the most famous NP-hard optimization problems in computer science and operations research.
+This repository provides multiple algorithms to solve the classic Traveling Salesman Problem - one of the most famous NP-hard optimisation problems in computer science and operations research.
 
 ## Problem Description
 
@@ -9,7 +9,7 @@ This repository provides multiple algorithms to solve the classic Traveling Sale
 **Mathematical Formulation**:
 - Input: Complete graph with n vertices (cities) and weighted edges (distances)
 - Output: Hamiltonian cycle with minimum total weight
-- Objective: Minimize Σ d(ci, ci+1) for all cities in the tour
+- Objective: Minimise Σ d(ci, ci+1) for all cities in the tour
 
 **Complexity**: The TSP is NP-hard, meaning:
 - No known polynomial-time algorithm exists
@@ -21,22 +21,22 @@ This repository provides multiple algorithms to solve the classic Traveling Sale
 The TSP is not just an academic curiosity - it has countless real-world applications:
 
 ### Logistics & Transportation
-- **Package Delivery**: FedEx, UPS route optimization
+- **Package Delivery**: FedEx, UPS route optimisation
 - **School Bus Routes**: Efficient student pickup/dropoff
 - **Garbage Collection**: Municipal waste management
 - **Airline Routes**: Flight scheduling and connections
 
 ### Manufacturing
-- **Circuit Board Drilling**: Minimize drill movement
+- **Circuit Board Drilling**: Minimise drill movement
 - **DNA Sequencing**: Overlap fragment assembly
-- **Robotic Welding**: Optimize welding arm path
+- **Robotic Welding**: Optimise welding arm path
 - **3D Printing**: Layer-by-layer path planning
 
 ### Computer Science
 - **Network Design**: Fiber optic cable routing
-- **Data Analysis**: Clustering and visualization
+- **Data Analysis**: Clustering and visualisation
 - **VLSI Design**: Wire routing on chips
-- **Compiler Optimization**: Register allocation
+- **Compiler Optimisation**: Register allocation
 
 ## Implementation Features
 
@@ -128,7 +128,7 @@ The program demonstrates:
 2. **Distance Calculation**: Compute all pairwise distances
 3. **Algorithm Execution**: Run each solver
 4. **Performance Comparison**: Time and quality metrics
-5. **Visualization Data**: Output for plotting tours
+5. **Visualisation Data**: Output for plotting tours
 
 ## Usage
 
@@ -217,7 +217,7 @@ Best Solution Found: 245 (Brute Force & Dynamic Programming)
 - **Concorde**: Best exact TSP solver, solved 85,900-city problem
 - **LKH (Lin-Kernighan-Helsgaun)**: State-of-the-art heuristic
 - **Genetic Algorithms**: Evolutionary approach
-- **Ant Colony Optimization**: Swarm intelligence
+- **Ant Colony Optimisation**: Swarm intelligence
 - **Neural Networks**: Learning-based approaches
 
 ### Complexity Theory Connections
@@ -226,7 +226,7 @@ Best Solution Found: 245 (Brute Force & Dynamic Programming)
 - Is there a tour with distance ≤ k?
 - NP-complete
 
-**TSP Optimization**: Find minimum tour
+**TSP Optimisation**: Find minimum tour
 - NP-hard
 
 **Approximation Hardness**:
@@ -258,21 +258,21 @@ Best Solution Found: 245 (Brute Force & Dynamic Programming)
 2. **Parallel Processing**: Run multiple algorithms
 3. **Geographic Constraints**: Use lat/long coordinates
 4. **Capacity Constraints**: Limited vehicle capacity
-5. **Multi-Objective**: Minimize time AND distance
+5. **Multi-Objective**: Minimise time AND distance
 
 ## Interesting Facts
 
 - **Largest TSP Solved**: 85,900 cities (circuit board drilling)
 - **Complexity**: 50-city problem has ~10⁶⁴ possible tours
 - **First Study**: 1930s by Karl Menger
-- **Economic Impact**: Billions saved annually through TSP optimization
+- **Economic Impact**: Billions saved annually through TSP optimisation
 - **Still Active Research**: Papers published weekly on TSP variants
 
 ## Limitations of This Implementation
 
 - Uses Euclidean distance (easily adaptable)
-- Simulated annealing parameters not optimized
-- No visualization (generates data for external plotting)
+- Simulated annealing parameters not optimised
+- No visualisation (generates data for external plotting)
 - Not parallelized (could use multiprocessing)
 - Educational purpose, not production-grade
 

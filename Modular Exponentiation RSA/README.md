@@ -217,7 +217,7 @@ While RSA is still widely used, newer alternatives are gaining adoption:
 - Would break RSA, DSA, Diffie-Hellman, ECC
 - Large-scale quantum computers don't exist yet (as of 2024)
 - NIST is standardizing post-quantum algorithms
-- Organizations should plan migration strategies
+- Organisations should plan migration strategies
 
 ## Performance Analysis
 
@@ -261,7 +261,7 @@ Feel free to fork and send pull requests! Ideas for contributions:
 
 - Add Chinese Remainder Theorem optimization
 - Implement proper padding schemes
-- Add visualization of the algorithm steps
+- Add visualisation of the algorithm steps
 - Demonstrate digital signatures
 - Add more primality tests (Solovay-Strassen, AKS)
 

@@ -52,7 +52,7 @@ This implementation includes:
 - **Argument Principle**: Counts zeros in regions
 - **Euler Product**: Connection to primes
 - **Zeta Values**: Special values (ζ(2), ζ(4), etc.)
-- **Visualization Data**: Generates data for plotting
+- **Visualisation Data**: Generates data for plotting
 
 ### 4. Special Values
 - **ζ(2) = π²/6**: Basel problem solution

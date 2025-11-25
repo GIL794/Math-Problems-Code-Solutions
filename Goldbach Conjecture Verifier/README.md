@@ -29,7 +29,7 @@ The program includes several powerful features:
 ### Core Functions
 - **Goldbach Pair Finder**: Finds all possible ways to express an even number as the sum of two primes
 - **Range Verification**: Verifies the conjecture for all even numbers in a given range
-- **Statistical Analysis**: Analyzes patterns in the number of representations
+- **Statistical Analysis**: Analyses patterns in the number of representations
 - **Weak Goldbach**: Also demonstrates the weak Goldbach conjecture (expressing odd numbers as sum of three primes)
 
 ### Algorithms Used
@@ -75,7 +75,7 @@ Verification for small even numbers (4 to 50)
 
 Goldbach Representations Analysis
 ======================================================================
-Total even numbers analyzed: 24
+Total even numbers analysed: 24
 Successfully verified: 24
 Average representations per number: 2.54
 Maximum representations: 6
@@ -110,7 +110,7 @@ While primarily of theoretical interest, Goldbach's conjecture relates to:
 
 ## Performance
 
-The implementation is optimized for efficiency:
+The implementation is optimised for efficiency:
 - Generates primes once using the Sieve of Eratosthenes
 - Uses set lookups for O(1) prime checking
 - Avoids duplicate pair checking
@@ -121,8 +121,8 @@ For the range 4 to 1000, the program verifies all 499 even numbers instantly, fi
 ## How to Contribute
 
 Feel free to fork and send pull requests! Some ideas:
-- Optimize the algorithm further
-- Add visualization of prime pair distributions
+- Optimise the algorithm further
+- Add visualisation of prime pair distributions
 - Implement parallel verification for very large ranges
 - Add more statistical analysis features
 

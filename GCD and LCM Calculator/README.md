@@ -56,7 +56,7 @@ Extends GCD and LCM to work with more than two numbers:
 - ✅ Handle multiple numbers (3 or more)
 - ✅ Check if numbers are coprime (relatively prime)
 - ✅ Find all common divisors of two numbers
-- ✅ Step-by-step visualization of the Euclidean algorithm
+- ✅ Step-by-step visualisation of the Euclidean algorithm
 - ✅ Demonstrate mathematical properties and relationships
 
 ## Usage
@@ -176,7 +176,7 @@ The Euclidean algorithm is remarkably efficient - even for very large numbers, i
 
 Feel free to fork and send pull requests! Suggestions for improvements:
 - Implement binary GCD algorithm (Stein's algorithm)
-- Add visualization of the Euclidean algorithm
+- Add visualisation of the Euclidean algorithm
 - Include more real-world examples
 - Add interactive input mode
 

@@ -167,10 +167,10 @@ The bottleneck is prime factorization, which is the same problem that makes RSA 
 ## How to Contribute
 
 Feel free to fork and send pull requests! Some ideas:
-- Add visualization of φ(n) growth patterns
+- Add visualisation of φ(n) growth patterns
 - Implement sieve-based calculation for ranges
 - Add more cryptographic applications
-- Optimize factorization for very large numbers
+- Optimise factorisation for very large numbers
 - Add support for symbolic computation
 
 ---
