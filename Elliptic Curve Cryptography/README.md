@@ -6,13 +6,14 @@ This repository provides a complete implementation of Elliptic Curve Cryptograph
 
 Elliptic Curve Cryptography is based on the algebraic structure of elliptic curves over finite fields. An elliptic curve is defined by the equation:
 
-```
+```text
 y² = x³ + ax + b
 ```
 
 Points on this curve, combined with a special "point at infinity" (O), form an abelian group under a geometric operation called "point addition."
 
 **Why ECC matters:**
+
 - **Smaller Keys**: 256-bit ECC provides security equivalent to 3072-bit RSA
 - **Faster Operations**: More efficient computation
 - **Lower Power**: Perfect for mobile and IoT devices
@@ -29,14 +30,16 @@ For points P = (x₁, y₁) and Q = (x₂, y₂) on the curve:
 2. **Inverse**: P + (-P) = O where -P = (x₁, -y₁)
 
 3. **Different Points** (P ≠ Q):
-   ```
+
+   ```text
    λ = (y₂ - y₁) / (x₂ - x₁)
    x₃ = λ² - x₁ - x₂
    y₃ = λ(x₁ - x₃) - y₁
    ```
 
 4. **Point Doubling** (P = Q):
-   ```
+
+   ```text
    λ = (3x₁² + a) / (2y₁)
    x₃ = λ² - 2x₁
    y₃ = λ(x₁ - x₃) - y₁
@@ -45,7 +48,8 @@ For points P = (x₁, y₁) and Q = (x₂, y₂) on the curve:
 ### Scalar Multiplication
 
 The most important operation in ECC:
-```
+
+```text
 nP = P + P + ... + P (n times)
 ```
 
@@ -56,28 +60,33 @@ This is computed efficiently using the "double-and-add" algorithm in O(log n) ti
 ## Implementation Features
 
 ### 1. Core Elliptic Curve Operations
+
 - **Point Addition**: Add two points on the curve
 - **Point Doubling**: Efficiently compute 2P
 - **Scalar Multiplication**: Compute nP using double-and-add
 - **Point Validation**: Verify points lie on the curve
 
 ### 2. ECDSA (Elliptic Curve Digital Signature Algorithm)
+
 - **Key Generation**: Create public/private key pairs
 - **Signature Generation**: Sign messages
 - **Signature Verification**: Verify signatures
 - **Hash Integration**: Uses SHA-256 for message hashing
 
 ### 3. ECDH (Elliptic Curve Diffie-Hellman)
+
 - **Shared Secret**: Two parties establish common secret
 - **Perfect Forward Secrecy**: Each session uses new keys
 - **No Key Exchange**: Secret never transmitted
 
 ### 4. Popular Curves
+
 - **secp256k1**: Used by Bitcoin, Ethereum
 - **P-256 (secp256r1)**: NIST standard, used in TLS
 - **Curve25519**: Modern, high-security curve
 
 ### 5. Security Features
+
 - **Random Nonce Generation**: Critical for signature security
 - **Point Compression**: Efficient storage (33 bytes vs 65 bytes)
 - **Constant-Time Operations**: Resists timing attacks
@@ -109,6 +118,7 @@ python elliptic_curve_crypto.py
 ```
 
 The program will:
+
 - Demonstrate point operations on toy and real curves
 - Generate ECDSA keypairs
 - Sign and verify messages
@@ -158,24 +168,28 @@ Both parties computed the same secret without transmitting it!
 ## Real-World Applications
 
 ### Bitcoin & Cryptocurrency
+
 - **secp256k1 curve**: All Bitcoin transactions use ECDSA
 - **Address Generation**: Public key → Bitcoin address
 - **Transaction Signing**: Proves ownership of funds
 - **Schnorr Signatures**: New upgrade to Bitcoin
 
 ### TLS/SSL (HTTPS)
+
 - **P-256 curve**: Most common for web security
 - **ECDHE**: Elliptic Curve Diffie-Hellman Ephemeral
 - **Perfect Forward Secrecy**: Past communications stay secure
 - **Certificate Signatures**: CA signs certificates with ECDSA
 
 ### Messaging Apps (Signal, WhatsApp)
+
 - **X25519**: Key exchange (based on Curve25519)
 - **Ed25519**: Digital signatures
 - **End-to-End Encryption**: Only sender and recipient can decrypt
 - **Double Ratchet**: Uses ECC for key derivation
 
 ### IoT & Embedded Systems
+
 - **Low Power**: ECC requires less computation than RSA
 - **Small Keys**: Fits in constrained memory
 - **Fast**: Critical for real-time systems
@@ -241,6 +255,7 @@ Both parties computed the same secret without transmitting it!
 - **No Assembly**: Production code uses optimized field arithmetic
 
 **For Production Use**: Use established libraries like:
+
 - `cryptography` (Python)
 - OpenSSL
 - libsodium

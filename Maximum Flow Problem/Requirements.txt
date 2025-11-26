@@ -1,0 +1,6 @@
+Python 3.7+
+
+No external dependencies required - uses only Python standard library:
+- collections.deque for BFS queue
+- typing for type hints (optional, for code clarity)
+

@@ -1,2 +1,7 @@
-# No external dependencies required
-# Uses only Python standard library (itertools, math, random, time)
+Python 3.7+
+
+No external dependencies required - uses only Python standard library:
+- itertools for permutations
+- math for distance calculations
+- random for test case generation
+- time for performance measurement

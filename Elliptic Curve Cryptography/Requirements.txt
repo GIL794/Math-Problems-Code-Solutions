@@ -1,2 +1,6 @@
-# No external dependencies required
-# Uses only Python standard library (hashlib, secrets)
+Python 3.7+
+
+No external dependencies required - uses only Python standard library:
+- hashlib for SHA-256 hashing
+- secrets for cryptographically secure random numbers
+- Standard library functions for elliptic curve operations

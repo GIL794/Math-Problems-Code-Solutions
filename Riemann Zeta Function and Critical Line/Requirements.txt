@@ -1,2 +1,5 @@
-# No external dependencies required
-# Uses only Python standard library (math, cmath)
+Python 3.7+
+
+No external dependencies required - uses only Python standard library:
+- math and cmath for complex number operations
+- Standard library functions for zeta function computation

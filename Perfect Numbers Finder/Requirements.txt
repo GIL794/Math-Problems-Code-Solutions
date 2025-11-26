@@ -1,2 +1,5 @@
-# No dependencies required for standard Python
+Python 3.7+
 
+No external dependencies required - uses only Python standard library:
+- math for mathematical operations
+- Standard library functions for divisor calculations

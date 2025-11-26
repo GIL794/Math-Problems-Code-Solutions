@@ -1,1 +1,5 @@
-# No dependencies required for standard Python
+Python 3.7+
+
+No external dependencies required - uses only Python standard library:
+- Standard library functions for prime number operations
+- Sieve of Eratosthenes implementation

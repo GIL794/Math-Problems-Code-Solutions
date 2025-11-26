@@ -1,5 +1,7 @@
-# Optional: NumPy for enhanced array operations
-# numpy>=1.19.0
+Python 3.7+
 
-# Note: The code works with standard Python lists, so NumPy is optional
+No external dependencies required - uses only Python standard library:
+- Standard library functions for array operations
+- Magic square generation algorithms
 
+Note: NumPy is optional for enhanced array operations but not required.

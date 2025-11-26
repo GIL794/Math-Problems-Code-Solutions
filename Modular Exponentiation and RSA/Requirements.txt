@@ -1,5 +1,7 @@
 Python 3.7+
 
 No external dependencies required - uses only Python standard library:
+- random for prime generation
+- time for performance measurement
 - math for mathematical operations
-- Standard library functions for triple generation
+

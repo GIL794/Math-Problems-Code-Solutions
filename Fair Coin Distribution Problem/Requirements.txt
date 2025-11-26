@@ -1,0 +1,5 @@
+Python 3.7+
+
+No external dependencies required - uses only Python standard library:
+- Standard library functions for combinatorial operations
+- Coin distribution algorithm implementation
